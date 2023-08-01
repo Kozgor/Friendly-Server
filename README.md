@@ -1,2 +1,1 @@
-# friendly_server
-NodeJS server
+# Friendly Server

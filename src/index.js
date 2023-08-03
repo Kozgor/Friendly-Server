@@ -11,7 +11,7 @@ app.listen(4444, err => {
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect('mongodb+srv://jack_claims:Dummy123@cluster0.zvmxo3n.mongodb.net/users?retryWrites=true&w=majority').then(() => {
+mongoose.connect(process.env.MONGODB_URI).then(() => {
     console.log('DB connected!')
 }).catch(err => {
     console.log(err)

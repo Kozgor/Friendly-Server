@@ -1,38 +1,46 @@
-import express from 'express'
-import mongoose from 'mongoose'
-import registrationValidator from './validations/auth.js'
-import * as UserController from './controllers/userController.js'
-import * as BoardController from './controllers/boardController.js'
-import cors from 'cors'
-import dotenv from 'dotenv'
+import express from "express";
+import mongoose from "mongoose";
+import registrationValidator from "./validations/auth.js";
+import * as UserController from "./controllers/authController.js";
+import * as BoardController from "./controllers/boardController.js";
+import * as AdminController from "./controllers/adminController.js";
+import cors from "cors";
+import dotenv from "dotenv";
 
-dotenv.config()
+dotenv.config();
 
-const app = express()
+const app = express();
 
-app.listen(4444, err => {
-    err ? console.log('Server error') : console.log('Connected!')
+app.listen(4444, (err) => {
+  err ? console.log("Server error") : console.log("Connected!");
 });
-app.use(express.json())
-app.use(cors())
+app.use(express.json());
+app.use(cors());
 
-mongoose.connect(process.env.MONGODB_URI).then(() => {
-    console.log('DB connected successfuly!')
-}).catch(err => {
-    console.log(err)
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log("DB connected successfuly!");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+app.get("/", (req, res) => {
+  res.send("Server runs at the port: 4444");
 });
 
-app.get('/', (req, res) => {
-    res.send('Server runs at the port: 4444')
-});
+app.post("/auth/register", registrationValidator, UserController.register);
 
-app.post('/auth/register', registrationValidator, UserController.register)
+app.post("/auth/login", UserController.login);
 
-app.post('/auth/login', UserController.login)
+app.post("/boards/new-board", BoardController.createBoard);
 
-app.post('/boards/new-board', BoardController.createBoard)
+app.get("/boards/:boardId", BoardController.getBoardById);
 
-app.get('/boards/:boardId', BoardController.getBoardById)
+app.post("/admin/settings", AdminController.saveAdminSettings);
+
+app.get("/admin/settings", AdminController.getAdminSettings);
 
 // app.post('/boards/board-id/column-id/all-column-cards', Controller.getCards);
 

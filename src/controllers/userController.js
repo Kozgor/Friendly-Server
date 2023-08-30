@@ -1,3 +1,5 @@
+import UserModel from "../models/User.js";
+
 export const getUserById = async (req, res) => {
   try {
     const errors = validationResult(req);

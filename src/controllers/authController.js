@@ -43,11 +43,7 @@ export const register = async (req, res) => {
     const hash = await bcrypt.hash(password, salt);
     let avatar 
     
-    if (!req.body.avatar) {
-      avatar = getInitials(req.body.fullName);
-    } else {
-      avatar = req.body.avatar
-    }
+    !req.body.avatar ? avatar = getInitials(req.body.fullName) : avatar = req.body.avatar;
 
     const doc = new UserModel({
       fullName: req.body.fullName,

@@ -10,11 +10,11 @@ export const createBoard = async (req, res) => {
     }
 
     const doc = new BoardModel({
-      boardName: req.body.boardName,
+      name: req.body.name,
       theme: req.body.theme,
-      users: req.body.users,
+      timer: req.body.timer,
       columns: req.body.columns,
-      actionItems: req.body.actionItems,
+      status: req.body.status,
     });
     const NewBoard = await doc.save();
 
@@ -28,9 +28,9 @@ export const createBoard = async (req, res) => {
   }
 };
 
-export const getBoardById = async (req, res) => {
+export const getActiveBoard = async (req, res) => {
   try {
-    const board = await BoardModel.findById(req.params.boardId);
+    const board = await BoardModel.findOne({ status: 'active' });
 
     if (!board) {
       return res.status(404).json({ message: "Board not found" });

@@ -9,6 +9,11 @@ export const createBoard = async (req, res) => {
       return res.status(400).json(errors.array());
     }
 
+    if (req.body.status) {
+      const activeBoard = await BoardModel.findOne({ status: "active" });
+      (activeBoard.status = "finalized"), activeBoard.save();
+    }
+
     const doc = new BoardModel({
       name: req.body.name,
       theme: req.body.theme,
@@ -30,7 +35,7 @@ export const createBoard = async (req, res) => {
 
 export const getActiveBoard = async (req, res) => {
   try {
-    const board = await BoardModel.findOne({ status: 'active' });
+    const board = await BoardModel.findOne({ status: "active" });
 
     if (!board) {
       return res.status(404).json({ message: "Board not found" });

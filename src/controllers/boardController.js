@@ -9,9 +9,11 @@ export const createBoard = async (req, res) => {
       return res.status(400).json(errors.array());
     }
 
-    if (req.body.status) {
-      const activeBoard = await BoardModel.findOne({ status: "active" });
-      (activeBoard.status = "finalized"), activeBoard.save();
+    const activeBoard = await BoardModel.findOne({ status: "active" });
+
+    if (activeBoard) {
+      activeBoard.status = "finalized";
+      activeBoard.save();
     }
 
     const doc = new BoardModel({

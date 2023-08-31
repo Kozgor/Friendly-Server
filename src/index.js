@@ -36,7 +36,7 @@ app.post("/auth/login", UserController.login);
 
 app.post("/boards/new-board", BoardController.createBoard);
 
-app.get("/boards/:boardId", BoardController.getBoardById);
+app.get("/boards/active", BoardController.getActiveBoard);
 
 app.post("/admin/settings", AdminController.saveAdminSettings);
 

@@ -1,25 +1,26 @@
 import mongoose from "mongoose";
 
 const BoardSchema = new mongoose.Schema({
-  boardName: {
+  name: {
     type: String,
     required: true,
   },
   theme: {
-    type: Object,
+    type: String,
     required: true,
   },
-  users: {
-    type: [Object],
+  timer: {
+    type: Number,
     required: true,
   },
   columns: {
     type: [Object],
     required: true,
   },
-  actionItems: {
-    type: [Object],
-    required: false,
+  status: {
+    type: String,
+    enum: ["created", "active", "finalized", "archived"],
+    required: true
   },
 });
 

@@ -1,24 +1,28 @@
 import mongoose from "mongoose";
 
 const ColumnSchema = new mongoose.Schema({
+  columnId: {
+    type: String,
+    required: true,
+  },
   columnTitle: {
     type: String,
     required: true,
+  },
+  columnSubtitle: {
+    type: String,
+    required: false,
   },
   columnAvatar: {
     type: String,
     required: false,
   },
-  columnSubtittle: {
-    type: String,
-    required: false,
-  },
-  columnColor: {
+  columnStyle: {
     type: String,
     required: true,
   },
   columnCards: {
-    type: [String],
+    type: [{ type: mongoose.Schema.ObjectId, ref: "ColumnCard" }],
     required: false,
   },
 });

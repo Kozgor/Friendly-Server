@@ -1,7 +1,15 @@
 import mongoose from "mongoose";
 
 const ColumnCardSchema = new mongoose.Schema({
-  cardMessage: {
+  boardId: {
+    type: String,
+    required: true,
+  },
+  columnId: {
+    type: String,
+    required: true,
+  },
+  cardComment: {
     type: String,
     required: true,
   },
@@ -9,12 +17,18 @@ const ColumnCardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  cardComments: [
-    {
-      type: String,
-      required: false,
-    },
-  ],
+  cardTags: {
+    type: [String],
+    required: false,
+  },
+  cardReactions: {
+    type: [String],
+    required: false,
+  },
+  cardReplies: {
+    type: [{ type: mongoose.Schema.ObjectId, ref: "ColumnCardReply" }],
+    required: false,
+  },
 });
 
 export default mongoose.model("ColumnCard", ColumnCardSchema);

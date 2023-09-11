@@ -1,11 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
-import registrationValidator from "./validations/auth.js";
-import * as UserController from "./controllers/authController.js";
-import * as BoardController from "./controllers/boardController.js";
-import * as AdminController from "./controllers/adminController.js";
 import cors from "cors";
 import dotenv from "dotenv";
+import cardRouter from "./routes/cardRoute.js";
+import boardRouter from "./routes/boardRoute.js";
+import authRouter from "./routes/authRoute.js";
 
 dotenv.config();
 
@@ -20,7 +19,7 @@ app.use(cors());
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
-    console.log("DB connected successfuly!");
+    console.log("DB connected successfully!");
   })
   .catch((err) => {
     console.log(err);
@@ -30,17 +29,16 @@ app.get("/", (req, res) => {
   res.send("Server runs at the port: 4444");
 });
 
-app.post("/auth/register", registrationValidator, UserController.register);
 
-app.post("/auth/login", UserController.login);
+app.use('/auth', authRouter);
 
-app.post("/boards/new-board", BoardController.createBoard);
+app.use('/boards', boardRouter);
 
-app.get("/boards/active", BoardController.getActiveBoard);
+app.use('/card', cardRouter);
 
-app.post("/admin/settings", AdminController.saveAdminSettings);
+// app.post("/admin/settings", AdminController.saveAdminSettings);
 
-app.get("/admin/settings", AdminController.getAdminSettings);
+// app.get("/admin/settings", AdminController.getAdminSettings);
 
 // app.post('/boards/board-id/column-id/all-column-cards', Controller.getCards);
 

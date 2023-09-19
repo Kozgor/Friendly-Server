@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const ColumnCardSchema = new mongoose.Schema({
+  createdAt: {
+    type: Date,
+    required: true,
+  },
   boardId: {
     type: String,
     required: true,

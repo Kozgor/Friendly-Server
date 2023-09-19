@@ -8,6 +8,4 @@ router.route('/')
 .put(CardController.updateCard)
 .delete(CardController.removeCard);
 
-router.route('/column').get(CardController.getCardsForColumn);
-
 export default router;

@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import cardRouter from "./routes/cardRoute.js";
 import boardRouter from "./routes/boardRoute.js";
 import authRouter from "./routes/authRoute.js";
+import columnRouter from "./routes/columnRoute.js";
 
 dotenv.config();
 
@@ -29,12 +30,13 @@ app.get("/", (req, res) => {
   res.send("Server runs at the port: 4444");
 });
 
-
 app.use('/auth', authRouter);
 
 app.use('/boards', boardRouter);
 
 app.use('/card', cardRouter);
+
+app.use('/columns', columnRouter);
 
 // app.post("/admin/settings", AdminController.saveAdminSettings);
 

@@ -25,7 +25,7 @@ const newToken = (userId) => {
     },
     "jack-black",
     {
-      expiresIn: "1d",
+      expiresIn: "1h",
     }
   );
 };

@@ -3,12 +3,6 @@ import mongoose from "mongoose";
 const ColumnCardSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
-    get: function (isoDateString) {
-      return new Date(isoDateString);
-    },
-    set: function (date) {
-      return date.toISOString();
-    },
     required: true,
   },
   boardId: {

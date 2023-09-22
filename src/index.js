@@ -34,7 +34,7 @@ app.use('/auth', authRouter);
 
 app.use('/boards', boardRouter);
 
-app.use('/card', cardRouter);
+app.use('/cards', cardRouter);
 
 app.use('/columns', columnRouter);
 

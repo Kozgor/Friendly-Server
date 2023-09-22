@@ -40,6 +40,8 @@ app.use('/columns', columnRouter);
 
 app.use('/columns', columnRouter);
 
+app.use('/columns', columnRouter);
+
 // app.post("/admin/settings", AdminController.saveAdminSettings);
 
 // app.get("/admin/settings", AdminController.getAdminSettings);

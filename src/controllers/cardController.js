@@ -31,6 +31,7 @@ export const updateCard = async (req, res) => {
     const card = await ColumnCardModel.findByIdAndUpdate(req.body._id, {
       cardComment: req.body.cardComment,
       cardTags: req.body.cardTags,
+      createdAt: req.body.createdAt,
     });
 
     res.json(card);

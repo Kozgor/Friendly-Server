@@ -31,9 +31,14 @@ export const updateCard = async (req, res) => {
     const card = await ColumnCardModel.findByIdAndUpdate(req.body._id, {
       cardComment: req.body.cardComment,
       cardTags: req.body.cardTags,
+      createdAt: req.body.createdAt,
     });
 
-    res.json(card);
+    if (!card) {
+      return res.status(404).json({ message: "Card not found" });
+    }
+  
+    res.status(200).json(card);
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -52,11 +57,11 @@ export const removeCard = async (req, res) => {
   
       await ColumnCardModel.findByIdAndDelete(req.body._id);
   
-      res.json();
+      res.status(200).json();
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        message: "Card update error",
+        message: "Card deleting error",
       });
     }
 };

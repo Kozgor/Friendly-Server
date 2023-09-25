@@ -30,6 +30,16 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    boards: {
+      active: {
+        type: String,
+        required: false,
+      },
+      finilized: {
+        type: String,
+        required: false,
+      }
+    }
   }, {
     timestamps: true,
   }

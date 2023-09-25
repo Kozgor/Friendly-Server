@@ -51,3 +51,41 @@ export const getActiveBoard = async (req, res) => {
     });
   }
 };
+
+export const setFinalizedBoard = async (req, res) => {
+  try {
+    const board = await BoardModel.findByIdAndUpdate(req.body._id, {
+      status: "finalized"
+    });
+
+    if (!board) {
+      return res.status(404).json({ message: "Board not found" });
+    }
+
+    res.json(board);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Board finalizing error",
+    });
+  }
+};
+
+export const setArchivedBoard = async (req, res) => {
+  try {
+    const board = await BoardModel.findByIdAndUpdate(req.body._id, {
+      status: "archived"
+    });
+
+    if (!board) {
+      return res.status(404).json({ message: "Board not found" });
+    }
+
+    res.json(board);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Board archiving error",
+    });
+  }
+};

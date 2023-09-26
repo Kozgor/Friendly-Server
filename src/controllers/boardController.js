@@ -35,6 +35,23 @@ export const createBoard = async (req, res) => {
   }
 };
 
+export const getBoardById = async (req, res) => {
+  try {
+    const board = await BoardModel.findById(req.body._id);
+
+    if (!board) {
+      return res.status(404).json({ message: "Board not found" });
+    }
+
+    res.json(board);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Error fetching board",
+    });
+  }
+};
+
 export const getActiveBoard = async (req, res) => {
   try {
     const board = await BoardModel.findOne({ status: "active" });

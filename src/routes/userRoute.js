@@ -4,6 +4,6 @@ import express from "express";
 const router = express.Router();
 
 router.route('/get-user').post(UserController.getUserById);
-router.route('/update-user-boards').put(UserController.updateUserBoards);
+router.route('/submit-comments').put(UserController.submitComments);
 
 export default router;

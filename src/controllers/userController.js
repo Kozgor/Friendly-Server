@@ -26,23 +26,27 @@ export const getUserById = async (req, res) => {
   }
 };
 
-export const updateUserBoards = async (req, res) => {
+export const submitComments = async (req, res) => {
   try {
-    const errors = validationResult(req);
+    const user = await UserModel.findById(req.body._id);
 
-    if (!errors.isEmpty()) {
-      return res.status(400).json(errors.array());
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
 
-    const user = await UserModel.findByIdAndUpdate(req.body._id, {
-      boards: req.body.boards
-    });
+    const { active, finalized } = user.boards;
+    user.boards.active = null;
+    user.boards.finalized = active;
 
-    res.status(200).json(user);
+    await user.save();
+
+    return res.status(200).json({
+      message: 'Comments submitted successfully', user 
+    });
   } catch (error) {
-    console.log(error);
-    res.status(403).json({
-      message: "User update error",
+    console.error(error);
+    return res.status(500).json({
+      message: 'Internal Server Error'
     });
   }
 };

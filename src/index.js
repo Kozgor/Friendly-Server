@@ -6,6 +6,7 @@ import cardRouter from "./routes/cardRoute.js";
 import boardRouter from "./routes/boardRoute.js";
 import authRouter from "./routes/authRoute.js";
 import columnRouter from "./routes/columnRoute.js";
+import userRouter from "./routes/userRoute.js";
 
 dotenv.config();
 
@@ -31,6 +32,8 @@ app.get("/", (req, res) => {
 });
 
 app.use('/auth', authRouter);
+
+app.use('/user', userRouter);
 
 app.use('/boards', boardRouter);
 

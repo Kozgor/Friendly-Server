@@ -21,6 +21,10 @@ const ColumnCardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  cardAuthorId: {
+    type: String,
+    required: true,
+  },
   cardTags: {
     type: [String],
     required: false,

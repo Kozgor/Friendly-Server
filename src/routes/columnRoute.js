@@ -3,7 +3,7 @@ import express from "express";
 
 const router = express.Router();
 
-router.route('/user_comments').post(ColumnController.getUserCardsForColumn);
-router.route('/users_comments').post(ColumnController.getAllCardsForColumn);
+router.route('/user-comments').post(ColumnController.getUserCardsForColumn);
+router.route('/users-comments').post(ColumnController.getAllCardsForColumn);
 
 export default router;

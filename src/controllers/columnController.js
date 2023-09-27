@@ -47,7 +47,7 @@ export const getUserCardsForColumn = async (req, res) => {
 
     const cards = await ColumnCardModel.find({
       boardId: req.body.boardId,
-      cardAuthor: req.body.cardAuthor,
+      cardAuthorId: req.body.cardAuthorId,
     });
 
     const sortedCards = groupDataByColumnId(cards);

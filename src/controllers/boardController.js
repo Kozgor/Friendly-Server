@@ -86,6 +86,24 @@ export const getFinalizedBoard = async (req, res) => {
   }
 };
 
+export const setActivatedBoard = async (req, res) => {
+  try {
+    const board = await BoardModel.findByIdAndUpdate(req.body._id, {
+      status: "active"
+    });
+
+    if (!board) {
+      return res.status(404).json({ message: "Board not found" });
+    }
+
+    res.json(board);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Board activation error",
+    });
+  }
+};
 export const setFinalizedBoard = async (req, res) => {
   try {
     const board = await BoardModel.findByIdAndUpdate(req.body._id, {

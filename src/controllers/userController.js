@@ -26,6 +26,36 @@ export const getUserById = async (req, res) => {
   }
 };
 
+export const finalizeUsersBoard = async (boardId) => {
+  try {
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors.array());
+    }
+
+    const usersToUpdate = await User.find({ 'boards.active': boardId });
+
+    if (!usersToUpdate) {
+      return res.status(404).json({
+        message: "No users for this board",
+      });
+    }
+
+    for (const user of usersToUpdate) {
+      user.boards.active = null;
+      user.boards.finalized = boardId;
+
+      await user.save();
+    }
+
+    res.status(200).json(usersToUpdate);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
 export const submitComments = async (req, res) => {
   try {
     const user = await UserModel.findById(req.body._id);

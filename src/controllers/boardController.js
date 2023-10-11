@@ -1,5 +1,6 @@
 import { validationResult } from "express-validator";
 import BoardModel from "../models/Board.js";
+import { finalizeUsersBoard } from "./userController.js";
 
 export const createBoard = async (req, res) => {
   try {
@@ -113,6 +114,8 @@ export const setFinalizedBoard = async (req, res) => {
     if (!board) {
       return res.status(404).json({ message: "Board not found" });
     }
+
+    finalizeUsersBoard(req.body._id);
 
     res.json(board);
   } catch (error) {

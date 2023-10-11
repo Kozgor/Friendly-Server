@@ -26,6 +26,25 @@ export const getUserById = async (req, res) => {
   }
 };
 
+export const finalizeUsersBoard = async (boardId) => {
+  try {
+    const usersToUpdate = await UserModel.find({ 'boards.active': boardId });
+
+    if (!usersToUpdate) {
+      return;
+    }
+
+    for (const user of usersToUpdate) {
+      user.boards.active = null;
+      user.boards.finalized = boardId;
+
+      await user.save();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const submitComments = async (req, res) => {
   try {
     const user = await UserModel.findById(req.body._id);
@@ -35,7 +54,7 @@ export const submitComments = async (req, res) => {
     }
 
     const { active, finalized } = user.boards;
-    user.boards.active = null;
+    user.boards.active = finalized;
     user.boards.finalized = active;
 
     await user.save();

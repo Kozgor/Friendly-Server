@@ -1,5 +1,6 @@
 import { validationResult } from "express-validator";
 import BoardModel from "../models/Board.js";
+import UserModel from "../models/User.js";
 import { finalizeUsersBoard } from "./userController.js";
 
 export const createBoard = async (req, res) => {
@@ -27,6 +28,20 @@ export const createBoard = async (req, res) => {
     const NewBoard = await doc.save();
 
     const BoardData = NewBoard._doc;
+
+    if (NewBoard) {
+      UserModel.updateMany({}, { $set: {
+        "boards.active": NewBoard._id,
+        "boards.finalized": null
+      }})
+      .then((usersUpdateRes) => {
+        console.log("Update users orepation result:", usersUpdateRes);
+      })
+      .catch((error) => {
+        console.error("Error updating users:", error);
+      });
+    }
+
     res.json(BoardData);
   } catch (error) {
     console.log(error);

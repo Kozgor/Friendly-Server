@@ -56,7 +56,10 @@ export const getBoardById = async (req, res) => {
     const board = await BoardModel.findById(req.body._id);
 
     if (!board) {
-      return res.status(404).json({ message: "Board not found" });
+      return res.status(200).json({
+        data: {},
+        message: "Board not found"
+      });
     }
 
     res.json(board);
@@ -73,7 +76,10 @@ export const getActiveBoard = async (req, res) => {
     const board = await BoardModel.findOne({ status: "active" });
 
     if (!board) {
-      return res.status(404).json({ message: "Board not found" });
+      return res.status(200).json({
+        data: {},
+        message: "Board not found"
+      });
     }
 
     res.json(board);
@@ -90,7 +96,10 @@ export const getFinalizedBoard = async (req, res) => {
     const board = await BoardModel.findOne({ status: "finalized" });
 
     if (!board) {
-      return res.status(404).json({ message: "Board not found" });
+      return res.status(200).json({
+        data: {},
+        message: "Board not found"
+      });
     }
 
     res.json(board);

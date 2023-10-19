@@ -13,6 +13,10 @@ const BoardSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  participants: {
+    type: [String],
+    required: false,
+  },
   columns: {
     type: [Object],
     required: true,

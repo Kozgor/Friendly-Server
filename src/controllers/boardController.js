@@ -22,6 +22,7 @@ export const createBoard = async (req, res) => {
       name: req.body.name,
       theme: req.body.theme,
       timer: req.body.timer,
+      participants: req.body.participants,
       columns: req.body.columns,
       status: req.body.status,
     });

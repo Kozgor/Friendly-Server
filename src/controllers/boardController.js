@@ -22,6 +22,7 @@ export const createBoard = async (req, res) => {
       name: req.body.name,
       theme: req.body.theme,
       timer: req.body.timer,
+      participants: req.body.participants,
       columns: req.body.columns,
       status: req.body.status,
     });
@@ -30,7 +31,8 @@ export const createBoard = async (req, res) => {
     const BoardData = NewBoard._doc;
 
     if (NewBoard) {
-      UserModel.updateMany({}, { $set: {
+      const participantsEmails = req.body.participants;
+      UserModel.updateMany({ email: { $in: participantsEmails } }, { $set: {
         "boards.active": NewBoard._id,
         "boards.finalized": null
       }})

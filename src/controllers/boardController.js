@@ -31,7 +31,8 @@ export const createBoard = async (req, res) => {
     const BoardData = NewBoard._doc;
 
     if (NewBoard) {
-      UserModel.updateMany({}, { $set: {
+      const participantsEmails = req.body.participants;
+      UserModel.updateMany({ email: { $in: participantsEmails } }, { $set: {
         "boards.active": NewBoard._id,
         "boards.finalized": null
       }})

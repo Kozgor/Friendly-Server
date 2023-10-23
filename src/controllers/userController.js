@@ -26,6 +26,32 @@ export const getUserById = async (req, res) => {
   }
 };
 
+export const getAllUsers = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors.array());
+    }
+
+    const users = await UserModel.find({});
+
+    if (!users) {
+      return res.status(200).json({
+        message: "Users not found",
+        data: []
+      });
+    }
+
+    res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
 export const finalizeUsersBoard = async (boardId) => {
   try {
     const usersToUpdate = await UserModel.find({ 'boards.active': boardId });

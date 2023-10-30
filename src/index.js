@@ -14,7 +14,7 @@ dotenv.config();
 const app = express();
 
 app.listen(process.env.PORT, () => {
-  wakeUpFriendly('https://friendly-ui.onrender.com/');
+  wakeUpFriendly(process.env.URL);
 });
 app.use(express.json());
 app.use(cors());

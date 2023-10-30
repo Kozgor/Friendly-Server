@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.route('/new-board').post(BoardController.createBoard);
 router.route('/get-board').post(BoardController.getBoardById);
+router.route('/get-boards').post(BoardController.getAllBoards);
 router.route('/finalize-board').put(BoardController.setFinalizedBoard);
 router.route('/activate-board').put(BoardController.setActivatedBoard);
 router.route('/archive-board').put(BoardController.setArchivedBoard);

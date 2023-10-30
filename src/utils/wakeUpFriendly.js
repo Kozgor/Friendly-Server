@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-const wakeUpFriendly = (url, interval = 5, callback) => {
+const wakeUpFriendly = (url, interval = 1, callback) => {
   const milliseconds = interval * 60000;
   setTimeout(() => {
     try { 

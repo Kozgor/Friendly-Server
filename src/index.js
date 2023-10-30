@@ -7,13 +7,14 @@ import boardRouter from "./routes/boardRoute.js";
 import authRouter from "./routes/authRoute.js";
 import columnRouter from "./routes/columnRoute.js";
 import userRouter from "./routes/userRoute.js";
+import wakeUpFriendly from "./utils/wakeUpFriendly.js";
 
 dotenv.config();
 
 const app = express();
 
-app.listen(4444, (err) => {
-  err ? console.log("Server error") : console.log("Connected!");
+app.listen(process.env.PORT, () => {
+  wakeUpFriendly(process.env.MONGODB_URI);
 });
 app.use(express.json());
 app.use(cors());
@@ -31,20 +32,12 @@ app.get("/", (req, res) => {
   res.send("Server runs at the port: 4444");
 });
 
-app.use('/auth', authRouter);
+app.use("/auth", authRouter);
 
-app.use('/user', userRouter);
+app.use("/user", userRouter);
 
-app.use('/boards', boardRouter);
+app.use("/boards", boardRouter);
 
-app.use('/card', cardRouter);
+app.use("/card", cardRouter);
 
-app.use('/columns', columnRouter);
-
-// app.post("/admin/settings", AdminController.saveAdminSettings);
-
-// app.get("/admin/settings", AdminController.getAdminSettings);
-
-// app.post('/boards/board-id/column-id/all-column-cards', Controller.getCards);
-
-// app.post('/boards/board-id/column-id/edit-column-card', Controller.editCard);
+app.use("/columns", columnRouter);

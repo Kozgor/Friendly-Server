@@ -14,7 +14,7 @@ dotenv.config();
 const app = express();
 
 app.listen(process.env.PORT, () => {
-  wakeUpFriendly(process.env.MONGODB_URI);
+  wakeUpFriendly(process.env.URL);
 });
 app.use(express.json());
 app.use(cors());

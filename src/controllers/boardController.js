@@ -25,6 +25,7 @@ export const createBoard = async (req, res) => {
       participants: req.body.participants,
       columns: req.body.columns,
       status: req.body.status,
+      createdAt: req.body.createdAt,
     });
     const NewBoard = await doc.save();
 

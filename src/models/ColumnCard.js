@@ -38,7 +38,7 @@ const ColumnCardSchema = new mongoose.Schema({
     required: false,
   },
   cardReplies: {
-    type: [{ type: mongoose.Schema.ObjectId, ref: "ColumnCardReply" }],
+    type: [Boolean],
     required: false,
   },
 });

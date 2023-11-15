@@ -65,3 +65,38 @@ export const removeCard = async (req, res) => {
       });
     }
 };
+
+export const updateCardReaction = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors.array());
+    }
+
+    const card = await ColumnCardModel.findById(req.body._id);
+    const { cardReactions } = card;
+    const containsUserReaction = cardReactions.some(reaction => reaction.userId === req.body.userId);
+
+    if (containsUserReaction) {
+      const index = cardReactions.findIndex(reaction => reaction.userId === req.body.userId);
+
+      cardReactions[index].isHappyReaction = req.body.isHappyReaction;
+    } else {
+      cardReactions.push({
+        userId: req.body.userId,
+        isHappyReaction: req.body.isHappyReaction
+      });
+    }
+
+    await card.save();
+    return res.status(200).json({
+      message: 'Card reply submitted successfully', card
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Card deleting error",
+    });
+  }
+};

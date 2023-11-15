@@ -25,6 +25,7 @@ export const createBoard = async (req, res) => {
       participants: req.body.participants,
       columns: req.body.columns,
       status: req.body.status,
+      createdAt: req.body.createdAt,
     });
     const NewBoard = await doc.save();
 
@@ -92,6 +93,26 @@ export const getActiveBoard = async (req, res) => {
     });
   }
 };
+
+export const getAllBoards = async (req, res) => {
+  try {
+    const boards = await BoardModel.find({});
+
+    if (!boards) {
+      return res.status(200).json({
+        data: {},
+        message: "Boards not found"
+      });
+    }
+
+    res.json(boards);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Error fetching boards",
+    });
+  }
+}
 
 export const getFinalizedBoard = async (req, res) => {
   try {

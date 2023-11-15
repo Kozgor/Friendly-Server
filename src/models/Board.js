@@ -26,6 +26,10 @@ const BoardSchema = new mongoose.Schema({
     enum: ["created", "active", "finalized", "archived"],
     required: true
   },
+  createdAt: {
+    type: Date,
+    required: true
+  }
 });
 
 export default mongoose.model("Board", BoardSchema);

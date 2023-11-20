@@ -29,6 +29,8 @@ export const updateCard = async (req, res) => {
     }
 
     const card = await ColumnCardModel.findByIdAndUpdate(req.body._id, {
+      cardAuthor: req.body.cardAuthor,
+      cardAuthorAvatar: req.body.cardAuthorAvatar,
       cardComment: req.body.cardComment,
       cardTags: req.body.cardTags,
       createdAt: req.body.createdAt,

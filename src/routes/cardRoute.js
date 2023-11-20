@@ -3,9 +3,10 @@ import express from "express";
 
 const router = express.Router();
 
-router.route('/')
-.post(CardController.createCard)
-.put(CardController.updateCard)
-.delete(CardController.removeCard);
+router.route('/create-card').post(CardController.createCard);
+router.route('/update-card').put(CardController.updateCard);
+router.route('/update-card-reactions').put(CardController.updateCardReaction);
+router.route('/remove-card').delete(CardController.removeCard);
+
 
 export default router;

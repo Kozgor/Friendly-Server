@@ -33,14 +33,22 @@ const ColumnCardSchema = new mongoose.Schema({
     type: [String],
     required: false,
   },
-  cardReactions: {
-    type: [String],
-    required: false,
-  },
+  cardReactions: [
+    {
+      userId: {
+        type: String,
+        required: false
+      },
+      isHappyReaction: {
+        type: Boolean,
+        required: false
+      }
+    }
+  ],
   cardReplies: {
-    type: [{ type: mongoose.Schema.ObjectId, ref: "ColumnCardReply" }],
+    type: [Boolean],
     required: false,
-  },
+  }
 });
 
 export default mongoose.model("ColumnCard", ColumnCardSchema);

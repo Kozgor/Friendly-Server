@@ -7,6 +7,7 @@ import boardRouter from "./routes/boardRoute.js";
 import authRouter from "./routes/authRoute.js";
 import columnRouter from "./routes/columnRoute.js";
 import userRouter from "./routes/userRoute.js";
+import boardsummaryRouter from "./routes/boardSummaryRoute.js";
 import wakeUpFriendly from "./utils/wakeUpFriendly.js";
 
 dotenv.config();
@@ -41,3 +42,5 @@ app.use("/boards", boardRouter);
 app.use("/card", cardRouter);
 
 app.use("/columns", columnRouter);
+
+app.use("/board_summary", boardsummaryRouter);

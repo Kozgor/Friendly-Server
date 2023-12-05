@@ -3,6 +3,6 @@ import express from "express";
 
 const router = express.Router();
 
-router.route('/get-board-summary').get(BoardSummary.getBoardSummary);
+router.route('/get-board-summary').post(BoardSummary.getBoardSummary);
 
 export default router;

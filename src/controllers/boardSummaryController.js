@@ -15,13 +15,23 @@ export const getBoardSummary = async (req, res) => {
 
       if (sortedCards) {
         const allCards = Object.values(sortedCards).flat();
-        const boardSummaryData = allCards.map((card) => ({
-          columnId: card.columnId,
-          cardComment: card.cardComment,
-          cardTags: card.cardTags ? card.cardTags.join(', ') : '',
-          cardReactions: card.cardReactions,
-          cardAuthor: card.cardAuthor
-        }));
+        let trueCount = 0;
+        let falseCount = 0;
+
+        const boardSummaryData = allCards.map((card) => {
+          card.cardReactions.forEach((cardReaction) => {
+            cardReaction.isHappyReaction ? trueCount++ : falseCount++;
+          });
+          return {
+            columnId: card.columnId,
+            cardComment: card.cardComment,
+            cardTags: card.cardTags ? card.cardTags.join(', ') : '',
+            cardReactions: {
+              happy: trueCount, unhappy: falseCount
+            },
+            cardAuthor: card.cardAuthor
+          }
+        });
 
         res.json(boardSummaryData);
 

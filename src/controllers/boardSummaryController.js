@@ -1,4 +1,5 @@
 import { validationResult } from "express-validator";
+import BoardModel from "../models/Board.js";
 import ColumnCardModel from "../models/ColumnCard.js";
 import groupDataByColumnId from "../utils/groupDataByColumnId.js";
 
@@ -11,6 +12,7 @@ export const getBoardSummary = async (req, res) => {
       }
   
       const cards = await ColumnCardModel.find({ boardId: req.body.boardId });
+      const board = await BoardModel.findById(req.body.boardId);
       const sortedCards = groupDataByColumnId(cards);
 
       if (sortedCards) {
@@ -23,6 +25,7 @@ export const getBoardSummary = async (req, res) => {
             cardReaction.isHappyReaction ? trueCount++ : falseCount++;
           });
           return {
+            boardName: board.name,
             columnId: card.columnId,
             cardComment: card.cardComment,
             cardTags: card.cardTags ? card.cardTags.join(', ') : '',

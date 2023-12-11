@@ -22,13 +22,12 @@ export const getBoardSummary = async (req, res) => {
 
       const getBoardSummaryData = () => {
         if (allCards.length) {
-          return allCards.map((card) => {
+          const boardSummaryDataList =  allCards.map((card) => {
             card.cardReactions.forEach((cardReaction) => {
               cardReaction.isHappyReaction ? trueCount++ : falseCount++;
             });
 
             return {
-              boardName: board.name,
               columnId: card.columnId,
               cardComment: card.cardComment,
               cardTags: card.cardTags ? card.cardTags.join(', ') : '',
@@ -38,19 +37,25 @@ export const getBoardSummary = async (req, res) => {
               cardAuthor: card.cardAuthor
             }
           })
+
+          return {
+            boardName: board.name,
+            boardSummaryDataList
+          }
         }
 
-        return [{ boardName: board.name }];
+        return {
+          boardName: board.name,
+          boardSummaryDataList: []
+        };
       }
 
-  
       const boardSummaryData = getBoardSummaryData();
+
       res.json(boardSummaryData);
 
       return;
     }
-
-    res.json(boardSummaryData);
   } catch (error) {
     console.log(error);
     res.status(500).json({

@@ -22,7 +22,7 @@ export const getBoardSummary = async (req, res) => {
 
       const getBoardSummaryData = () => {
         if (allCards.length) {
-          const boardSummaryDataList =  allCards.map((card) => {
+          const boardSummaryDataList = allCards.map((card) => {
             card.cardReactions.forEach((cardReaction) => {
               cardReaction.isHappyReaction ? trueCount++ : falseCount++;
             });
@@ -54,9 +54,10 @@ export const getBoardSummary = async (req, res) => {
       const boardSummaryData = getBoardSummaryData();
 
       res.json(boardSummaryData);
-
+  
       return;
     }
+
   } catch (error) {
     console.log(error);
     res.status(500).json({

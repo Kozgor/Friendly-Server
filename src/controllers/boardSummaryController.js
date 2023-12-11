@@ -29,6 +29,7 @@ export const getBoardSummary = async (req, res) => {
 
             return {
               columnId: card.columnId,
+              cardId: card._id,
               cardComment: card.cardComment,
               cardTags: card.cardTags ? card.cardTags.join(', ') : '',
               cardReactions: {

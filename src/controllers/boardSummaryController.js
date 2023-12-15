@@ -17,12 +17,13 @@ export const getBoardSummary = async (req, res) => {
 
     if (sortedCards || board.name) {
       const allCards = Object.values(sortedCards).flat();
-      let trueCount = 0;
-      let falseCount = 0;
 
       const getBoardSummaryData = () => {
         if (allCards.length) {
           const boardSummaryDataList = allCards.map((card) => {
+            let trueCount = 0;
+            let falseCount = 0;
+      
             card.cardReactions.forEach((cardReaction) => {
               cardReaction.isHappyReaction ? trueCount++ : falseCount++;
             });

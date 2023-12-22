@@ -39,7 +39,7 @@ export const updateCard = async (req, res) => {
     if (!card) {
       return res.status(404).json({ message: "Card not found" });
     }
-  
+
     res.status(200).json(card);
   } catch (error) {
     console.log(error);
@@ -50,22 +50,24 @@ export const updateCard = async (req, res) => {
 };
 
 export const removeCard = async (req, res) => {
-    try {
-      const errors = validationResult(req);
-  
-      if (!errors.isEmpty()) {
-        return res.status(400).json(errors.array());
-      }
-  
-      await ColumnCardModel.findByIdAndDelete(req.body._id);
-  
-      res.status(200).json();
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({
-        message: "Card deleting error",
-      });
+  try {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors.array());
     }
+
+    for (const cardId of req.body.cards) {
+      await ColumnCardModel.findByIdAndDelete(cardId);
+    }
+
+    res.status(200).json();
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Card deleting error",
+    });
+  }
 };
 
 export const updateCardReaction = async (req, res) => {
@@ -78,22 +80,27 @@ export const updateCardReaction = async (req, res) => {
 
     const card = await ColumnCardModel.findById(req.body._id);
     const { cardReactions } = card;
-    const containsUserReaction = cardReactions.some(reaction => reaction.userId === req.body.userId);
+    const containsUserReaction = cardReactions.some(
+      (reaction) => reaction.userId === req.body.userId
+    );
 
     if (containsUserReaction) {
-      const index = cardReactions.findIndex(reaction => reaction.userId === req.body.userId);
+      const index = cardReactions.findIndex(
+        (reaction) => reaction.userId === req.body.userId
+      );
 
       cardReactions[index].isHappyReaction = req.body.isHappyReaction;
     } else {
       cardReactions.push({
         userId: req.body.userId,
-        isHappyReaction: req.body.isHappyReaction
+        isHappyReaction: req.body.isHappyReaction,
       });
     }
 
     await card.save();
     return res.status(200).json({
-      message: 'Card reply submitted successfully', card
+      message: "Card reply submitted successfully",
+      card,
     });
   } catch (error) {
     console.log(error);

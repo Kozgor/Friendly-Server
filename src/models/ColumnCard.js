@@ -37,18 +37,18 @@ const ColumnCardSchema = new mongoose.Schema({
     {
       userId: {
         type: String,
-        required: false
+        required: true,
       },
-      isHappyReaction: {
-        type: Boolean,
-        required: false
-      }
-    }
+      reaction: {
+        type: String || null,
+        required: false,
+      },
+    },
   ],
   cardReplies: {
     type: [Boolean],
     required: false,
-  }
+  },
 });
 
 export default mongoose.model("ColumnCard", ColumnCardSchema);

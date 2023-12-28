@@ -23,13 +23,21 @@ export const getBoardSummary = async (req, res) => {
           const boardSummaryDataList = allCards.map((card) => {
             let trueCount = 0;
             let falseCount = 0;
-      
+            let columnTitle = '';
+
             card.cardReactions.forEach((cardReaction) => {
               cardReaction.isHappyReaction ? trueCount++ : falseCount++;
             });
 
+            board.columns.forEach(column => {
+              if (column.columnId === card.columnId) {
+                columnTitle = column.columnTitle;
+              }
+            });
+
             return {
               columnId: card.columnId,
+              columnTitle: columnTitle,
               cardId: card._id,
               cardComment: card.cardComment,
               cardTags: card.cardTags ? card.cardTags.join(', ') : '',

@@ -21,15 +21,15 @@ export const getBoardSummary = async (req, res) => {
       const getBoardSummaryData = () => {
         if (allCards.length) {
           const boardSummaryDataList = allCards.map((card) => {
-            let trueCount = 0;
-            let falseCount = 0;
-            let columnTitle = '';
+            let happyCount = 0;
+            let unhappyCount = 0;
+            let columnTitle = "";
 
             card.cardReactions.forEach((cardReaction) => {
-              cardReaction.isHappyReaction ? trueCount++ : falseCount++;
+              cardReaction.reaction === "happy" ? happyCount++ : unhappyCount++;
             });
 
-            board.columns.forEach(column => {
+            board.columns.forEach((column) => {
               if (column.columnId === card.columnId) {
                 columnTitle = column.columnTitle;
               }
@@ -40,33 +40,33 @@ export const getBoardSummary = async (req, res) => {
               columnTitle: columnTitle,
               cardId: card._id,
               cardComment: card.cardComment,
-              cardTags: card.cardTags ? card.cardTags.join(', ') : '',
+              cardTags: card.cardTags ? card.cardTags.join(", ") : "",
               cardReactions: {
-                happy: trueCount, unhappy: falseCount
+                happy: happyCount,
+                unhappy: unhappyCount,
               },
-              cardAuthor: card.cardAuthor
-            }
-          })
+              cardAuthor: card.cardAuthor,
+            };
+          });
 
           return {
             boardName: board.name,
-            boardSummaryDataList
-          }
+            boardSummaryDataList,
+          };
         }
 
         return {
           boardName: board.name,
-          boardSummaryDataList: []
+          boardSummaryDataList: [],
         };
-      }
+      };
 
       const boardSummaryData = getBoardSummaryData();
 
       res.json(boardSummaryData);
-  
+
       return;
     }
-
   } catch (error) {
     console.log(error);
     res.status(500).json({

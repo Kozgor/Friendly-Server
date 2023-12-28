@@ -80,21 +80,28 @@ export const updateCardReaction = async (req, res) => {
 
     const card = await ColumnCardModel.findById(req.body._id);
     const { cardReactions } = card;
-    const containsUserReaction = cardReactions.some(
-      (reaction) => reaction.userId === req.body.userId
-    );
-
-    if (containsUserReaction) {
-      const index = cardReactions.findIndex(
+    if (req.body.reaction) {
+      const containsUserReaction = cardReactions.some(
         (reaction) => reaction.userId === req.body.userId
       );
 
-      cardReactions[index].isHappyReaction = req.body.isHappyReaction;
+      if (containsUserReaction) {
+        const index = cardReactions.findIndex(
+          (reaction) => reaction.userId === req.body.userId
+        );
+
+        cardReactions[index].reaction = req.body.reaction;
+      } else {
+        cardReactions.push({
+          userId: req.body.userId,
+          reaction: req.body.reaction,
+        });
+      }
     } else {
-      cardReactions.push({
-        userId: req.body.userId,
-        isHappyReaction: req.body.isHappyReaction,
-      });
+      card.cardReactions =
+        cardReactions.filter(
+          (cardReaction) => cardReaction.userId !== req.body.userId
+        ) || [];
     }
 
     await card.save();
@@ -105,7 +112,7 @@ export const updateCardReaction = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      message: "Card deleting error",
+      message: "Card reply error",
     });
   }
 };
